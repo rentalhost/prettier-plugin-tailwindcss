@@ -26,13 +26,14 @@ function format(str, options = {}) {
 }
 
 function formatFixture(name) {
-  let binPath = path.resolve(__dirname, '../node_modules/.bin/prettier')
+  let cwd = path.resolve(__dirname, '../node_modules/.bin')
   let filePath = path.resolve(__dirname, `fixtures/${name}/index.html`)
   return execSync(
-    `${binPath} ${filePath} --plugin-search-dir ${__dirname} --plugin ${path.resolve(
+    `prettier "${filePath}" --plugin-search-dir "${__dirname}" --plugin "${path.resolve(
       __dirname,
       '..'
-    )}`
+    )}"`,
+    { cwd }
   )
     .toString()
     .trim()
